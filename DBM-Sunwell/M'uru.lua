@@ -25,7 +25,7 @@ local warnBlackHole		= mod:NewSpellAnnounce(46282, 3)
 local timerHuman		= mod:NewTimer(60, "TimerHuman", 27778, nil, nil, 6)
 local timerVoid			= mod:NewTimer(30, "TimerVoid", 46087, nil, nil, 6)
 local timerNextDarkness	= mod:NewNextTimer(45, 45996, nil, nil, nil, 2)
-local timerBlackHoleCD	= mod:NewCDTimer(15, 46282, nil, nil, nil, 1, )
+local timerBlackHoleCD	= mod:NewCDTimer(15, 46282, nil, nil, nil, 1)
 local timerPhase		= mod:NewTimer(10, "TimerPhase", 46087, nil, nil, 6)
 
 local berserkTimer		= mod:NewBerserkTimer(600)

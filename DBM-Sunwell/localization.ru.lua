@@ -17,14 +17,12 @@ L:SetWarningLocalization{
 
 L:SetOptionLocalization{
 	WarnPortal			= "Показывать предупреждение для цели $spell:46021",
-	SpecWarnWildMagic	= "Показывать специальные предупреждения для Дикой магии",
 	SpecWarnWildMagic	= "Показывать спецпредупреждения для Дикой магии",
 	ShowFrame			= "Показывать фрейм Призрачного мира",
-	FrameClassColor		= "Использовать цвета классов в фрейме Призрачного мира",
-	FrameUpwards		= "расширять фрейм Призрачного мира вверх",
 	FrameClassColor		= "Использовать цвета классов во фрейме Призрачного мира",
 	FrameUpwards		= "Расширять фрейм Призрачного мира вверх",
-	FrameLocked			= "Закрепить фрейм Призрачного мира на месте"
+	FrameLocked			= "Закрепить фрейм Призрачного мира на месте",
+	RangeFrame			= DBM_CORE_L.AUTO_RANGE_OPTION_TEXT:format(10, 46021)
 }
 
 L:SetMiscLocalization{
@@ -125,12 +123,6 @@ L:SetTimerLocalization{
 }
 
 L:SetOptionLocalization{
-	WarnHuman		= "Показывает предупреждение о Страже",
-	WarnVoid		= "Показывает предупреждение о Часовом бездны",
-	WarnFiend		= "Показывает предупреждение о Исчадиях тьмы во второй фазе",
-	TimerHuman		= "Показывает таймер до Стражи",
-	TimerVoid		= "Показывает таймер до Часового Бездны",
-	TimerPhase		= "Показывает таймер до перехода во вторую фазу"
 	WarnHuman		= "Показывать предупреждение о Страже",
 	WarnVoid		= "Показывать предупреждение о Часовом бездны",
 	WarnFiend		= "Показывать предупреждение об Исчадиях тьмы во второй фазе",
@@ -160,15 +152,10 @@ L:SetWarningLocalization{
 }
 
 L:SetTimerLocalization{
-	TimerBlueOrb	= "Dragon Orbs activate"--Translate
 	TimerBlueOrb	= "Активация сфер Калесгоса"
 }
 
 L:SetOptionLocalization{
-	WarnDarkOrb		= "Показывает предупреждение о темных сферах",
-	WarnBlueOrb		= "Показывает предупреждение о сферах Калесгоса",
-	SpecWarnDarkOrb	= "Show special warning for Dark Orbs",--Translate
-	SpecWarnBlueOrb	= "Show special warning for Dragon Orbs",--Translate
 	WarnDarkOrb		= "Показывать предупреждение о темных сферах",
 	WarnBlueOrb		= "Показывать предупреждение о сферах Калесгоса",
 	SpecWarnDarkOrb	= "Показывать спецпредупреждения о темных сферах",
