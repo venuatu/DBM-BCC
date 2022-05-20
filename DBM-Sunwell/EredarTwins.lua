@@ -132,7 +132,7 @@ end
 --Emotes still fire at cast start, which means getting target of cast before cast finishes
 --This still acts as fastest way to get target. The additional checks in success are for locales that may be missing
 function mod:CHAT_MSG_RAID_BOSS_EMOTE(msg, _, _, _, target)
-	if (msg == L.Nova or msg:find(L.Nova)) and target then
+	if (msg == L.Nova or msg:find(L.Nova)) and target and self:AntiSpam(5, target..1) then
 		target = DBM:GetUnitFullName(target)
 		if target == UnitName("player") then
 			specWarnNova:Show()
