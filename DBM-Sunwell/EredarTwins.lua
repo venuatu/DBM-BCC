@@ -12,7 +12,8 @@ mod:RegisterCombat("combat")
 mod:RegisterEventsInCombat(
 	"SPELL_AURA_APPLIED 45230 45347 45348",
 	"SPELL_AURA_APPLIED_DOSE 45347 45348",
-	"SPELL_CAST_START 45248",
+	"SPELL_CAST_START 45248 45342 45329",
+	"SPELL_CAST_SUCCESS 45342 45329",
 	"SPELL_DAMAGE 45256",
 	"SPELL_MISSED 45256",
 	"CHAT_MSG_RAID_BOSS_EMOTE"
@@ -57,6 +58,46 @@ function mod:OnCombatEnd()
 	end
 end
 
+function mod:SPELL_CAST_START(args)
+	if args.spellId == 45248 then
+		warnBlade:Show()
+		timerBladeCD:Start()
+	elseif args.spellId == 45342 then
+		timerConflag:Start()
+		timerConflagCD:Start()
+	elseif args.spellId == 45329 then
+		timerNova:Start()
+		timerNovaCD:Start()
+	end
+end
+
+--Redundant checks for nova and conflag that are slower but don't require locales
+function mod:SPELL_CAST_SUCCESS(args)
+	if args.spellId == 45329 and self:AntiSpam(5, args.destName..1) then
+		if args:IsPlayer() then
+			specWarnNova:Show()
+			specWarnNova:Play("targetyou")
+			yellNova:Yell()
+		else
+			warnNova:Show(args.destName)
+		end
+		if self.Options.NovaIcon then
+			self:SetIcon(args.destName, 7, 5)
+		end
+	elseif args.spellId == 45342 and self:AntiSpam(5, args.destName..2) then
+		if args:IsPlayer() then
+			specWarnConflag:Show()
+			specWarnConflag:Play("targetyou")
+			yellConflag:Yell()
+		else
+			warnConflag:Show(args.destName)
+		end
+		if self.Options.ConflagIcon then
+			self:SetIcon(args.destName, 8, 5)
+		end
+	end
+end
+
 function mod:SPELL_AURA_APPLIED(args)
 	if args.spellId == 45230 and not args:IsDestTypePlayer() then
 		specWarnPyro:Show(args.destName)
@@ -88,18 +129,11 @@ function mod:SPELL_MISSED(_, _, _, _, _, _, _, _, spellId)
 	end
 end
 
-function mod:SPELL_CAST_START(args)
-	if args.spellId == 45248 then
-		warnBlade:Show()
-		timerBladeCD:Start()
-	end
-end
-
+--Emotes still fire at cast start, which means getting target of cast before cast finishes
+--This still acts as fastest way to get target. The additional checks in success are for locales that may be missing
 function mod:CHAT_MSG_RAID_BOSS_EMOTE(msg, _, _, _, target)
 	if (msg == L.Nova or msg:find(L.Nova)) and target then
 		target = DBM:GetUnitFullName(target)
-		timerNova:Start()
-		timerNovaCD:Start()
 		if target == UnitName("player") then
 			specWarnNova:Show()
 			specWarnNova:Play("targetyou")
@@ -110,10 +144,8 @@ function mod:CHAT_MSG_RAID_BOSS_EMOTE(msg, _, _, _, target)
 		if self.Options.NovaIcon then
 			self:SetIcon(target, 7, 5)
 		end
-	elseif (msg == L.Conflag or msg:find(L.Conflag)) and target then
+	elseif (msg == L.Conflag or msg:find(L.Conflag)) and target and self:AntiSpam(5, target..2) then
 		target = DBM:GetUnitFullName(target)
-		timerConflag:Start()
-		timerConflagCD:Start()
 		if target == UnitName("player") then
 			specWarnConflag:Show()
 			specWarnConflag:Play("targetyou")
