@@ -65,6 +65,24 @@ local function showBloomTargets(self)
 	self.vb.bloomIcon = 8
 end
 
+do
+	local myName = UnitName("player")
+
+	function mod:ArmageddonTarget(targetname)
+		if not targetname then return end
+		if targetname == myName then
+			specWarnArmaYou:Show()
+			specWarnArmaYou:Play("targetyou")
+			yellArmageddon:Yell()
+		elseif self:CheckNearby(8, targetname) then
+			specWarnArmaClose:Show(targetname)
+			specWarnArmaClose:Play("watchfeet")
+		else
+			warnArmageddon:Show(targetname)
+		end
+	end
+end
+
 function mod:OnCombatStart(delay)
 	table.wipe(warnBloomTargets)
 	table.wipe(orbGUIDs)
@@ -167,28 +185,6 @@ function mod:SPELL_CAST_SUCCESS(args)
 		end
 	elseif args.spellId == 45909 then
 		self:BossTargetScanner(25315, "ArmageddonTarget", 0.05, 1)
-	end
-end
-
-
-do
-	local myName
-	function mod:ArmageddonTarget(targetname, uId)
-		if not targetname then return end
-		-- DBM:Debug('ArmaTarget t=' .. tostring(targetname) .. ', id=' .. tostring(uId), 2)
-		if myName == nil then
-			myName = UnitName('player')
-		end
-		if targetname == myName then
-			specWarnArmaYou:Show()
-			specWarnArmaYou:Play("targetyou")
-			yellArmageddon:Yell()
-		elseif self:CheckNearby(8, targetname) then
-			specWarnArmaClose:Show(targetname)
-			specWarnArmaClose:Play("watchfeet")
-		else
-			warnArmageddon:Show(targetname)
-		end
 	end
 end
 
